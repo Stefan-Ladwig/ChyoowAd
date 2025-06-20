@@ -87,13 +87,24 @@ def link_parent_with_children(parent_node, node_dict, elements):
         add_link_to_elements(elements, child_node, "_emoji_klein", parent_node, "_mittleres_emoji")
 
 
-def tree_to_json(tree):
+def link_all_parents_and_children(node_dict, elements):
+
+    for id, node in node_dict.items():
+        link_parent_with_children(
+            parent_node=node,
+            node_dict=node_dict,
+            elements=elements
+        )
+
+
+    #create elements from nodes (node_dict)
+def get_elements_from_nodes(node_dict):
     elements_template = get_template_json()
     elements = dict()
     elements_buffer = dict()
     current_elements = list()
 
-    for id, node in tree.node_dict.items():
+    for id, node in node_dict.items():
         current_elements = copy.deepcopy(elements_template)
         for element in current_elements:
             match(element["id"]):
@@ -116,12 +127,14 @@ def tree_to_json(tree):
         elements = elements | {id: elements_buffer}
         elements_buffer = dict()
 
-    for id, node in tree.node_dict.items():
-        link_parent_with_children(
-            parent_node=node,
-            node_dict=tree.node_dict,
-            elements=elements
-        )
+    return elements
+    
+
+def tree_to_json(tree):
+
+    elements = get_elements_from_nodes(tree.node_dict)
+    
+    link_all_parents_and_children(tree.node_dict, elements)
 
     elements_list = list()        
     for element in elements.values():
