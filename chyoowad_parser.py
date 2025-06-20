@@ -97,42 +97,45 @@ def link_all_parents_and_children(node_dict, elements):
         )
 
 
-    #create elements from nodes (node_dict)
-def get_elements_from_nodes(node_dict):
-    elements_template = get_template_json()
+def generate_elements_from_node(elements_template, node):
+    element_node_dict = {
+        "oberes_emoji": node.choice_up,
+        "unteres_emoji": node.choice_down,
+        "mittleres_emoji": node.state,
+        "emoji_klein": node.origin
+    }
+    generated_elements = dict()
+
+    for element in elements_template:
+        if element["id"] in element_node_dict:
+            element["text"] = element_node_dict[ element["id"] ]
+
+        if "text" in element.keys() and "originalText" in element.keys():
+            element["originalText"] = element["text"]
+
+        element["id"] = str(node.counter) + "_" + element["id"]
+        element["x"] += node.counter * 3000
+
+        generated_elements = generated_elements | {element["id"]: element}
+
+    return generated_elements
+
+
+def get_elements_from_nodes(node_dict, json_elements_template):
     elements = dict()
-    elements_buffer = dict()
-    current_elements = list()
+    elements_template = list()
 
     for id, node in node_dict.items():
-        current_elements = copy.deepcopy(elements_template)
-        for element in current_elements:
-            match(element["id"]):
-                case "oberes_emoji":
-                    element["text"] = node.choice_up
-                case "unteres_emoji":
-                    element["text"] = node.choice_down
-                case "mittleres_emoji":
-                    element["text"] = node.state
-                case "emoji_klein":
-                    element["text"] = node.origin
-
-            if "text" in element.keys() and "originalText" in element.keys():
-                element["originalText"] = element["text"]
-
-            element["id"] = str(node.counter) + "_" + element["id"]
-            element["x"] += node.counter * 3000
-
-            elements_buffer = elements_buffer | {element["id"]: element}
-        elements = elements | {id: elements_buffer}
-        elements_buffer = dict()
+        elements_template = copy.deepcopy(json_elements_template)
+        node_elements = generate_elements_from_node(elements_template, node)
+        elements = elements | {id: node_elements}
 
     return elements
     
 
 def tree_to_json(tree):
 
-    elements = get_elements_from_nodes(tree.node_dict)
+    elements = get_elements_from_nodes(tree.node_dict, get_template_json())
     
     link_all_parents_and_children(tree.node_dict, elements)
 
