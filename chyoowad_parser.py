@@ -1,7 +1,7 @@
 import re, json, copy, time
 
-#input_file = "template_canvas.txt"
 input_file = "parse_test.txt"
+
 
 class Node():
     def __init__(self, origin, state, choice_up, choice_down):
@@ -48,21 +48,30 @@ def extract_node_parts(string):
 
 
 def get_template_json():
-    stream = open("template_modified.excalidraw", encoding="utf-8")
+    stream = open("template.excalidraw", encoding="utf-8")
     outer_json = json.load(stream)
     stream.close()
     return outer_json["elements"]
+
 
 def shift_elements(elements):
     for element in elements:
         element["x"] += 1000
     return elements
 
+
 def parse_input(stream):
     new_tree = origin_tree()
     for line in stream.readlines():
         new_tree.add_node_from_str(line.strip())
     return new_tree
+
+
+def add_link_to_elements(elements, origin_node, origin_element, target_node, target_element):
+    origin_element_id = str(origin_node.counter) + origin_element
+    target_element_id = str(target_node.counter) + target_element
+    link_url = "https://excalidraw.com/?element=" + target_element_id
+    elements[origin_node.origin][origin_element_id]["link"] = link_url
 
 
 def tree_to_json(tree):
@@ -84,9 +93,6 @@ def tree_to_json(tree):
                 case "emoji_klein":
                     element["text"] = node.origin
 
-            #if "text" in element.keys() and "fontSize" in element.keys():
-                #element["fontSize"] = float(element["fontSize"]) / len(element["text"])**(1/2)
-
             if "text" in element.keys() and "originalText" in element.keys():
                 element["originalText"] = element["text"]
 
@@ -104,34 +110,28 @@ def tree_to_json(tree):
             
         top_child = tree.node_dict[parent.choice_up]
 
-        elements[parent.origin][str(parent.counter)+"_oberes_emoji"]["link"] = \
-            "https://excalidraw.com/?element=" + str(top_child.counter) + "_mittleres_emoji"
+        add_link_to_elements(elements, parent, "_oberes_emoji", top_child, "_mittleres_emoji")
+        add_link_to_elements(elements, top_child, "_emoji_klein", parent, "_mittleres_emoji")
         
-        elements[top_child.origin][str(top_child.counter)+"_emoji_klein"]["link"] = \
-            "https://excalidraw.com/?element=" + str(parent.counter) + "_mittleres_emoji"
-
         if not node.choice_down in tree.node_dict:
             continue
 
         bot_child = tree.node_dict[parent.choice_down]
 
-        elements[parent.origin][str(parent.counter)+"_unteres_emoji"]["link"] = \
-            "https://excalidraw.com/?element=" + str(bot_child.counter) + "_mittleres_emoji"
-        
-        elements[bot_child.origin][str(bot_child.counter)+"_emoji_klein"]["link"] = \
-            "https://excalidraw.com/?element=" + str(parent.counter) + "_mittleres_emoji"
+        add_link_to_elements(elements, parent, "_unteres_emoji", bot_child, "_mittleres_emoji")
+        add_link_to_elements(elements, bot_child, "_emoji_klein", parent, "_mittleres_emoji")
 
     elements_list = list()        
     for element in elements.values():
         for nudel in element.values():
             elements_list.append(nudel)
 
-    stream = open("template_modified.excalidraw", encoding="utf-8")
+    stream = open("template.excalidraw", encoding="utf-8")
     outer_json = json.load(stream)
     stream.close()
     outer_json["elements"] = elements_list
     time_stamp = str(round(time.time()))
-    output = open(time_stamp+"_new_test_modified.excalidraw", "x")
+    output = open(time_stamp+"_new_test.excalidraw", "x")
     json.dump(outer_json, output)
     output.close()
 
