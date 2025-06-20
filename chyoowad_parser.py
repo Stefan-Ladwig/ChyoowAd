@@ -48,7 +48,7 @@ def extract_node_parts(string):
 
 
 def get_template_json():
-    stream = open("template.excalidraw", encoding="utf-8")
+    stream = open("template_modified.excalidraw", encoding="utf-8")
     outer_json = json.load(stream)
     stream.close()
     return outer_json["elements"]
@@ -91,7 +91,7 @@ def tree_to_json(tree):
                 element["originalText"] = element["text"]
 
             element["id"] = str(node.counter) + "_" + element["id"]
-            element["x"] += node.counter * 1920
+            element["x"] += node.counter * 3000
 
             elements_buffer = elements_buffer | {element["id"]: element}
         elements = elements | {id: elements_buffer}
@@ -126,20 +126,20 @@ def tree_to_json(tree):
         for nudel in element.values():
             elements_list.append(nudel)
 
-    stream = open("template.excalidraw", encoding="utf-8")
+    stream = open("template_modified.excalidraw", encoding="utf-8")
     outer_json = json.load(stream)
     stream.close()
     outer_json["elements"] = elements_list
     time_stamp = str(round(time.time()))
-    output = open(time_stamp+"_new_test.excalidraw", "x")
+    output = open(time_stamp+"_new_test_modified.excalidraw", "x")
     json.dump(outer_json, output)
     output.close()
 
 
 def origin_tree():
-    origin = "_"
+    origin = "👣"
     state = "👋"
-    choice_up = "→"
+    choice_up = "ℹ️"
     choice_down = "🆗"
     new_node = Node(origin, state, choice_up, choice_down)
     new_tree = Tree()
@@ -158,3 +158,4 @@ if __name__ == "__main__":
     tt = parse_input(stream)
     tree_to_json(tt)
     stream.close()
+    print("end programm")
