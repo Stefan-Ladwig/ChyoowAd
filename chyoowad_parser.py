@@ -74,6 +74,19 @@ def add_link_to_elements(elements, origin_node, origin_element, target_node, tar
     elements[origin_node.origin][origin_element_id]["link"] = link_url
 
 
+def link_parent_with_children(parent_node, node_dict, elements):
+
+    for child in ({"id": parent_node.choice_up, "element": "_oberes_emoji"},
+                  {"id": parent_node.choice_down, "element": "_unteres_emoji"}):
+
+        if not child["id"] in node_dict:
+            continue
+        
+        child_node = node_dict[child["id"]]
+        add_link_to_elements(elements, parent_node, child["element"], child_node, "_mittleres_emoji")
+        add_link_to_elements(elements, child_node, "_emoji_klein", parent_node, "_mittleres_emoji")
+
+
 def tree_to_json(tree):
     elements_template = get_template_json()
     elements = dict()
@@ -104,22 +117,11 @@ def tree_to_json(tree):
         elements_buffer = dict()
 
     for id, node in tree.node_dict.items():
-        parent = node
-        if not node.choice_up in tree.node_dict:
-            continue
-            
-        top_child = tree.node_dict[parent.choice_up]
-
-        add_link_to_elements(elements, parent, "_oberes_emoji", top_child, "_mittleres_emoji")
-        add_link_to_elements(elements, top_child, "_emoji_klein", parent, "_mittleres_emoji")
-        
-        if not node.choice_down in tree.node_dict:
-            continue
-
-        bot_child = tree.node_dict[parent.choice_down]
-
-        add_link_to_elements(elements, parent, "_unteres_emoji", bot_child, "_mittleres_emoji")
-        add_link_to_elements(elements, bot_child, "_emoji_klein", parent, "_mittleres_emoji")
+        link_parent_with_children(
+            parent_node=node,
+            node_dict=tree.node_dict,
+            elements=elements
+        )
 
     elements_list = list()        
     for element in elements.values():
