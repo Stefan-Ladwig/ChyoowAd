@@ -1,4 +1,4 @@
-import re, json, copy, time
+import json, copy, time
 
 input_file = "parse_test.txt"
 
@@ -87,41 +87,57 @@ def link_parent_with_children(parent_node, node_dict, elements):
         add_link_to_elements(elements, child_node, "_emoji_klein", parent_node, "_mittleres_emoji")
 
 
-def tree_to_json(tree):
-    elements_template = get_template_json()
-    elements = dict()
-    elements_buffer = dict()
-    current_elements = list()
-
-    for id, node in tree.node_dict.items():
-        current_elements = copy.deepcopy(elements_template)
-        for element in current_elements:
-            match(element["id"]):
-                case "oberes_emoji":
-                    element["text"] = node.choice_up
-                case "unteres_emoji":
-                    element["text"] = node.choice_down
-                case "mittleres_emoji":
-                    element["text"] = node.state
-                case "emoji_klein":
-                    element["text"] = node.origin
-
-            if "text" in element.keys() and "originalText" in element.keys():
-                element["originalText"] = element["text"]
-
-            element["id"] = str(node.counter) + "_" + element["id"]
-            element["x"] += node.counter * 3000
-
-            elements_buffer = elements_buffer | {element["id"]: element}
-        elements = elements | {id: elements_buffer}
-        elements_buffer = dict()
-
-    for id, node in tree.node_dict.items():
+def link_all_parents_and_children(node_dict, elements):
+   
+    for node in node_dict.values():
         link_parent_with_children(
             parent_node=node,
-            node_dict=tree.node_dict,
+            node_dict=node_dict,
             elements=elements
         )
+
+
+def generate_elements_from_node(elements_template, node):
+    element_node_dict = {
+        "oberes_emoji": node.choice_up,
+        "unteres_emoji": node.choice_down,
+        "mittleres_emoji": node.state,
+        "emoji_klein": node.origin
+    }
+    generated_elements = dict()
+
+    for element in elements_template:
+        if element["id"] in element_node_dict:
+            element["text"] = element_node_dict[ element["id"] ]
+
+        if "text" in element.keys() and "originalText" in element.keys():
+            element["originalText"] = element["text"]
+
+        element["id"] = str(node.counter) + "_" + element["id"]
+        element["x"] += node.counter * 3000
+
+        generated_elements = generated_elements | {element["id"]: element}
+
+    return generated_elements
+
+
+def get_elements_from_nodes(node_dict, json_elements_template):
+    elements = dict()
+    elements_template = list()
+
+    for id, node in node_dict.items():
+        elements_template = copy.deepcopy(json_elements_template)
+        node_elements = generate_elements_from_node(elements_template, node)
+        elements = elements | {id: node_elements}
+
+    return elements
+    
+
+def tree_to_json(tree):
+
+    elements = get_elements_from_nodes(tree.node_dict, get_template_json())
+    
+    link_all_parents_and_children(tree.node_dict, elements)
 
     elements_list = list()        
     for element in elements.values():
@@ -133,7 +149,7 @@ def tree_to_json(tree):
     stream.close()
     outer_json["elements"] = elements_list
     time_stamp = str(round(time.time()))
-    output = open(time_stamp+"_new_test.excalidraw", "x")
+    output = open("generated/" + time_stamp + "_new_test.excalidraw", "x")
     json.dump(outer_json, output)
     output.close()
 
@@ -160,4 +176,4 @@ if __name__ == "__main__":
     tt = parse_input(stream)
     tree_to_json(tt)
     stream.close()
-    print("end programm")
+    print("Programm finished!")
