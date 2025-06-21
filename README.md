@@ -6,8 +6,8 @@ This piece of software helps to tell interactive stories inside Excalidraw, usin
 It basically converts a plain-text story file (where every line is a storypoint) to an .excalidraw sketch-file.
 If you have no clue what this may mean, try one of the adventures I created:
 (change to view mode upon opening for the best experience)
-online-version: 
-.excalidraw-file:
+[online-version](https://excalidraw.com/#json=MFSyFDRTVKN8CCrfxrCEd,292iLALgxVmApHV5limy8A)
+[.excalidraw-file](small_demo.excalidraw)
 
 ---
 Current version on master is the minimum viable software, meaning it works, but there is much to improve!
