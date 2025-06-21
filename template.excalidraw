@@ -4,10 +4,40 @@
   "source": "https://marketplace.visualstudio.com/items?itemName=pomdtr.excalidraw-editor",
   "elements": [
     {
+      "id": "background",
+      "type": "rectangle",
+      "x": -1267.2340089175154,
+      "y": -857.0416101007496,
+      "width": 2256.6758551897324,
+      "height": 1785.5218107327441,
+      "angle": 0,
+      "strokeColor": "#e03131",
+      "backgroundColor": "#fffffe",
+      "fillStyle": "solid",
+      "strokeWidth": 12,
+      "strokeStyle": "dotted",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "Zz",
+      "roundness": {
+        "type": 3
+      },
+      "seed": 1448246387,
+      "version": 374,
+      "versionNonce": 520783768,
+      "isDeleted": false,
+      "boundElements": [],
+      "updated": 1750428156744,
+      "link": null,
+      "locked": false
+    },
+    {
       "id": "obere_ellipse",
       "type": "ellipse",
-      "x": 110.14984860809571,
-      "y": -254.29916358292857,
+      "x": -163.6711963137793,
+      "y": -245.0378415614442,
       "width": 250,
       "height": 130,
       "strokeColor": "#ced4da",
@@ -22,8 +52,8 @@
       },
       "link": null,
       "locked": false,
-      "version": 174,
-      "versionNonce": 333865904,
+      "version": 287,
+      "versionNonce": 661431981,
       "index": "a0",
       "isDeleted": false,
       "angle": 0,
@@ -36,13 +66,13 @@
           "type": "arrow"
         }
       ],
-      "updated": 1750178722609
+      "updated": 1750427632653
     },
     {
       "id": "untere_ellipse",
       "type": "ellipse",
-      "x": 110.14984860809571,
-      "y": 132.56500837791236,
+      "x": -163.6711963137793,
+      "y": 141.82633039939674,
       "width": 250,
       "height": 130,
       "strokeColor": "#ced4da",
@@ -57,8 +87,8 @@
       },
       "link": null,
       "locked": false,
-      "version": 306,
-      "versionNonce": 1090570106,
+      "version": 419,
+      "versionNonce": 1321901933,
       "index": "a1",
       "isDeleted": false,
       "angle": 0,
@@ -71,13 +101,13 @@
           "type": "arrow"
         }
       ],
-      "updated": 1750177998637
+      "updated": 1750427632653
     },
     {
       "id": "oberes_emoji",
       "type": "text",
-      "x": 152,
-      "y": -232,
+      "x": -121.821044921875,
+      "y": -222.73867797851562,
       "width": 167,
       "height": 87,
       "strokeColor": "#ced4da",
@@ -97,8 +127,8 @@
       "originalText": "🧺",
       "autoResize": false,
       "lineHeight": 1,
-      "version": 375,
-      "versionNonce": 85020154,
+      "version": 488,
+      "versionNonce": 1410426925,
       "index": "a2",
       "isDeleted": false,
       "angle": 0,
@@ -112,14 +142,14 @@
           "type": "arrow"
         }
       ],
-      "updated": 1750177988868,
+      "updated": 1750427632653,
       "containerId": null
     },
     {
       "id": "unteres_emoji",
       "type": "text",
-      "x": 151.1319580078125,
-      "y": 154.17092895507812,
+      "x": -122.6890869140625,
+      "y": 163.4322509765625,
       "width": 167,
       "height": 87,
       "strokeColor": "#ced4da",
@@ -139,8 +169,8 @@
       "originalText": "🏖️",
       "autoResize": false,
       "lineHeight": 1,
-      "version": 351,
-      "versionNonce": 1333497830,
+      "version": 464,
+      "versionNonce": 124639885,
       "index": "a3",
       "isDeleted": false,
       "angle": 0,
@@ -149,14 +179,14 @@
       "frameId": null,
       "roundness": null,
       "boundElements": [],
-      "updated": 1750177963055,
+      "updated": 1750427632653,
       "containerId": null
     },
     {
       "id": "diamond_groß",
       "type": "diamond",
-      "x": 0,
-      "y": -105,
+      "x": -273.821044921875,
+      "y": -95.73867797851562,
       "width": 220,
       "height": 220,
       "angle": 0,
@@ -172,8 +202,8 @@
       },
       "link": null,
       "locked": false,
-      "version": 30,
-      "versionNonce": 882342394,
+      "version": 143,
+      "versionNonce": 1330446573,
       "index": "a4",
       "isDeleted": false,
       "seed": 1,
@@ -193,13 +223,13 @@
           "type": "arrow"
         }
       ],
-      "updated": 1750178007827
+      "updated": 1750427632653
     },
     {
       "id": "mittleres_emoji",
       "type": "text",
-      "x": 57.666473388671875,
-      "y": -46.40625,
+      "x": -216.15457153320312,
+      "y": -37.144927978515625,
       "width": 104.05538940429686,
       "height": 104.05538940429686,
       "strokeColor": "#ced4da",
@@ -219,8 +249,8 @@
       "originalText": "🌤️",
       "autoResize": false,
       "lineHeight": 1,
-      "version": 242,
-      "versionNonce": 814052688,
+      "version": 355,
+      "versionNonce": 1758634605,
       "index": "a5",
       "isDeleted": false,
       "angle": 0,
@@ -242,14 +272,14 @@
           "type": "arrow"
         }
       ],
-      "updated": 1750178750768,
+      "updated": 1750427632653,
       "containerId": null
     },
     {
       "id": "diamond_klein",
       "type": "diamond",
-      "x": -93.08174506235753,
-      "y": -29.29868178590749,
+      "x": -366.9027899842325,
+      "y": -20.037359764423115,
       "width": 70,
       "height": 70,
       "strokeColor": "#ced4da",
@@ -264,8 +294,8 @@
       },
       "link": null,
       "locked": false,
-      "version": 156,
-      "versionNonce": 516531750,
+      "version": 269,
+      "versionNonce": 1552796877,
       "index": "a6",
       "isDeleted": false,
       "angle": 0,
@@ -278,13 +308,13 @@
           "type": "arrow"
         }
       ],
-      "updated": 1750178029225
+      "updated": 1750427632653
     },
     {
       "id": "emoji_klein",
       "type": "text",
-      "x": -70.78851691294346,
-      "y": -9.45181899293874,
+      "x": -344.60956183481846,
+      "y": -0.1904969714543654,
       "width": 29.59600830078125,
       "height": 29.59600830078125,
       "strokeColor": "#ced4da",
@@ -304,8 +334,8 @@
       "originalText": "_",
       "autoResize": false,
       "lineHeight": 1,
-      "version": 270,
-      "versionNonce": 410286000,
+      "version": 383,
+      "versionNonce": 1278262669,
       "index": "a7",
       "isDeleted": false,
       "angle": 0,
@@ -319,14 +349,14 @@
           "type": "arrow"
         }
       ],
-      "updated": 1750178764419,
+      "updated": 1750427632653,
       "containerId": null
     },
     {
       "id": "8u9guYckAwg7fDpSe9LDI",
       "type": "arrow",
-      "x": -25.50427715363213,
-      "y": 6.242838582035572,
+      "x": -299.32532207550713,
+      "y": 15.504160603519946,
       "width": 31.577539368374588,
       "height": 1.9180831046800426,
       "angle": 0,
@@ -344,11 +374,11 @@
         "type": 2
       },
       "seed": 2069516240,
-      "version": 442,
-      "versionNonce": 978407398,
+      "version": 783,
+      "versionNonce": 956962595,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1750178030136,
+      "updated": 1750427634147,
       "link": null,
       "locked": false,
       "points": [
@@ -363,13 +393,13 @@
       ],
       "lastCommittedPoint": null,
       "startBinding": {
-        "elementId": "diamond_klein",
-        "focus": 0.07200974681769082,
-        "gap": 1
+        "elementId": "emoji_klein",
+        "focus": 0.17509538473562708,
+        "gap": 15.688231458530083
       },
       "endBinding": {
         "elementId": "diamond_groß",
-        "focus": 0.06352693740875655,
+        "focus": 0.06352693740875662,
         "gap": 1
       },
       "startArrowhead": null,
@@ -379,8 +409,8 @@
     {
       "id": "twf8Aoc4gSBMZLViw1foP",
       "type": "arrow",
-      "x": 164.15746926016217,
-      "y": -51.19569907924577,
+      "x": -109.66357566171283,
+      "y": -41.934377057761395,
       "width": 78.22488547616595,
       "height": 71.54574887805222,
       "angle": 0,
@@ -398,11 +428,11 @@
         "type": 2
       },
       "seed": 257574864,
-      "version": 526,
-      "versionNonce": 1100831056,
+      "version": 867,
+      "versionNonce": 1892870755,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1750178731434,
+      "updated": 1750427634147,
       "link": null,
       "locked": false,
       "points": [
@@ -417,13 +447,13 @@
       ],
       "lastCommittedPoint": null,
       "startBinding": {
-        "elementId": "diamond_groß",
-        "focus": -0.06056726716897195,
-        "gap": 1
+        "elementId": "mittleres_emoji",
+        "focus": -0.07031331736282222,
+        "gap": 5.373174233702333
       },
       "endBinding": {
         "elementId": "obere_ellipse",
-        "focus": -0.4080404619760576,
+        "focus": -0.4080404619760578,
         "gap": 1.665858727053699
       },
       "startArrowhead": null,
@@ -433,8 +463,8 @@
     {
       "id": "2u92gXPJF-WTEQs-jHfUH",
       "type": "arrow",
-      "x": 163.5552279822154,
-      "y": 62.71559035454851,
+      "x": -110.2658169396596,
+      "y": 71.97691237603289,
       "width": 67.02363659657522,
       "height": 68.12259860424896,
       "angle": 0,
@@ -452,11 +482,11 @@
         "type": 2
       },
       "seed": 210078160,
-      "version": 511,
-      "versionNonce": 430292304,
+      "version": 852,
+      "versionNonce": 1886383523,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1750178743262,
+      "updated": 1750427634148,
       "link": null,
       "locked": false,
       "points": [
@@ -471,13 +501,13 @@
       ],
       "lastCommittedPoint": null,
       "startBinding": {
-        "elementId": "diamond_groß",
-        "focus": 0.02935715892387611,
-        "gap": 1
+        "elementId": "mittleres_emoji",
+        "focus": 0.022399961935828043,
+        "gap": 5.3879637293180895
       },
       "endBinding": {
         "elementId": "untere_ellipse",
-        "focus": 0.3232544788740049,
+        "focus": 0.32325447887400516,
         "gap": 1.7699752103243929
       },
       "startArrowhead": null,
@@ -487,8 +517,8 @@
     {
       "id": "reset_Ellipse",
       "type": "ellipse",
-      "x": 285.14674116459867,
-      "y": -28.628507573947388,
+      "x": 11.325696242723666,
+      "y": -19.367185552463013,
       "width": 78.83969885134805,
       "height": 67.63173203156657,
       "angle": 0,
@@ -508,19 +538,19 @@
         "type": 2
       },
       "seed": 1190825776,
-      "version": 161,
-      "versionNonce": 2033764304,
+      "version": 274,
+      "versionNonce": 1948454669,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1750168352185,
+      "updated": 1750427632653,
       "link": null,
       "locked": false
     },
     {
       "id": "reset",
       "type": "text",
-      "x": 288.71912896491574,
-      "y": -8.560218073867762,
+      "x": 14.89808404304074,
+      "y": 0.7011039476166125,
       "width": 72.43531720963414,
       "height": 31.157682530342246,
       "angle": 0,
@@ -538,11 +568,11 @@
       "index": "aF",
       "roundness": null,
       "seed": 1461161776,
-      "version": 142,
-      "versionNonce": 1550798288,
+      "version": 255,
+      "versionNonce": 1214752109,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1750168352185,
+      "updated": 1750427632653,
       "link": "https://excalidraw.com/?element=0_mittleres_emoji",
       "locked": false,
       "text": "Reset",

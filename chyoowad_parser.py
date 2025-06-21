@@ -1,7 +1,7 @@
-import re, json, copy, time
+import json, copy, time
 
-#input_file = "template_canvas.txt"
 input_file = "parse_test.txt"
+
 
 class Node():
     def __init__(self, origin, state, choice_up, choice_down):
@@ -53,10 +53,12 @@ def get_template_json():
     stream.close()
     return outer_json["elements"]
 
+
 def shift_elements(elements):
     for element in elements:
         element["x"] += 1000
     return elements
+
 
 def parse_input(stream):
     new_tree = origin_tree()
@@ -65,61 +67,77 @@ def parse_input(stream):
     return new_tree
 
 
-def tree_to_json(tree):
-    elements_template = get_template_json()
+def add_link_to_elements(elements, origin_node, origin_element, target_node, target_element):
+    origin_element_id = str(origin_node.counter) + origin_element
+    target_element_id = str(target_node.counter) + target_element
+    link_url = "https://excalidraw.com/?element=" + target_element_id
+    elements[origin_node.origin][origin_element_id]["link"] = link_url
+
+
+def link_parent_with_children(parent_node, node_dict, elements):
+
+    for child in ({"id": parent_node.choice_up, "element": "_oberes_emoji"},
+                  {"id": parent_node.choice_down, "element": "_unteres_emoji"}):
+
+        if not child["id"] in node_dict:
+            continue
+        
+        child_node = node_dict[child["id"]]
+        add_link_to_elements(elements, parent_node, child["element"], child_node, "_mittleres_emoji")
+        add_link_to_elements(elements, child_node, "_emoji_klein", parent_node, "_mittleres_emoji")
+
+
+def link_all_parents_and_children(node_dict, elements):
+   
+    for node in node_dict.values():
+        link_parent_with_children(
+            parent_node=node,
+            node_dict=node_dict,
+            elements=elements
+        )
+
+
+def generate_elements_from_node(elements_template, node):
+    element_node_dict = {
+        "oberes_emoji": node.choice_up,
+        "unteres_emoji": node.choice_down,
+        "mittleres_emoji": node.state,
+        "emoji_klein": node.origin
+    }
+    generated_elements = dict()
+
+    for element in elements_template:
+        if element["id"] in element_node_dict:
+            element["text"] = element_node_dict[ element["id"] ]
+
+        if "text" in element.keys() and "originalText" in element.keys():
+            element["originalText"] = element["text"]
+
+        element["id"] = str(node.counter) + "_" + element["id"]
+        element["x"] += node.counter * 3000
+
+        generated_elements = generated_elements | {element["id"]: element}
+
+    return generated_elements
+
+
+def get_elements_from_nodes(node_dict, json_elements_template):
     elements = dict()
-    elements_buffer = dict()
-    current_elements = list()
+    elements_template = list()
 
-    for id, node in tree.node_dict.items():
-        current_elements = copy.deepcopy(elements_template)
-        for element in current_elements:
-            match(element["id"]):
-                case "oberes_emoji":
-                    element["text"] = node.choice_up
-                case "unteres_emoji":
-                    element["text"] = node.choice_down
-                case "mittleres_emoji":
-                    element["text"] = node.state
-                case "emoji_klein":
-                    element["text"] = node.origin
+    for id, node in node_dict.items():
+        elements_template = copy.deepcopy(json_elements_template)
+        node_elements = generate_elements_from_node(elements_template, node)
+        elements = elements | {id: node_elements}
 
-            #if "text" in element.keys() and "fontSize" in element.keys():
-                #element["fontSize"] = float(element["fontSize"]) / len(element["text"])**(1/2)
+    return elements
+    
 
-            if "text" in element.keys() and "originalText" in element.keys():
-                element["originalText"] = element["text"]
+def tree_to_json(tree):
 
-            element["id"] = str(node.counter) + "_" + element["id"]
-            element["x"] += node.counter * 1920
-
-            elements_buffer = elements_buffer | {element["id"]: element}
-        elements = elements | {id: elements_buffer}
-        elements_buffer = dict()
-
-    for id, node in tree.node_dict.items():
-        parent = node
-        if not node.choice_up in tree.node_dict:
-            continue
-            
-        top_child = tree.node_dict[parent.choice_up]
-
-        elements[parent.origin][str(parent.counter)+"_oberes_emoji"]["link"] = \
-            "https://excalidraw.com/?element=" + str(top_child.counter) + "_mittleres_emoji"
-        
-        elements[top_child.origin][str(top_child.counter)+"_emoji_klein"]["link"] = \
-            "https://excalidraw.com/?element=" + str(parent.counter) + "_mittleres_emoji"
-
-        if not node.choice_down in tree.node_dict:
-            continue
-
-        bot_child = tree.node_dict[parent.choice_down]
-
-        elements[parent.origin][str(parent.counter)+"_unteres_emoji"]["link"] = \
-            "https://excalidraw.com/?element=" + str(bot_child.counter) + "_mittleres_emoji"
-        
-        elements[bot_child.origin][str(bot_child.counter)+"_emoji_klein"]["link"] = \
-            "https://excalidraw.com/?element=" + str(parent.counter) + "_mittleres_emoji"
+    elements = get_elements_from_nodes(tree.node_dict, get_template_json())
+    
+    link_all_parents_and_children(tree.node_dict, elements)
 
     elements_list = list()        
     for element in elements.values():
@@ -131,15 +149,15 @@ def tree_to_json(tree):
     stream.close()
     outer_json["elements"] = elements_list
     time_stamp = str(round(time.time()))
-    output = open(time_stamp+"_new_test.excalidraw", "x")
+    output = open("generated/" + time_stamp + "_new_test.excalidraw", "x")
     json.dump(outer_json, output)
     output.close()
 
 
 def origin_tree():
-    origin = "_"
+    origin = "👣"
     state = "👋"
-    choice_up = "→"
+    choice_up = "ℹ️"
     choice_down = "🆗"
     new_node = Node(origin, state, choice_up, choice_down)
     new_tree = Tree()
@@ -158,3 +176,4 @@ if __name__ == "__main__":
     tt = parse_input(stream)
     tree_to_json(tt)
     stream.close()
+    print("Programm finished!")
