@@ -1,4 +1,4 @@
-import re, json, copy, time
+import json, copy, time
 
 input_file = "parse_test.txt"
 
