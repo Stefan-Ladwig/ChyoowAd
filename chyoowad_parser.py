@@ -88,8 +88,8 @@ def link_parent_with_children(parent_node, node_dict, elements):
 
 
 def link_all_parents_and_children(node_dict, elements):
-
-    for id, node in node_dict.items():
+   
+    for node in node_dict.values():
         link_parent_with_children(
             parent_node=node,
             node_dict=node_dict,
@@ -149,7 +149,7 @@ def tree_to_json(tree):
     stream.close()
     outer_json["elements"] = elements_list
     time_stamp = str(round(time.time()))
-    output = open(time_stamp+"_new_test.excalidraw", "x")
+    output = open("generated/" + time_stamp + "_new_test.excalidraw", "x")
     json.dump(outer_json, output)
     output.close()
 
@@ -176,4 +176,4 @@ if __name__ == "__main__":
     tt = parse_input(stream)
     tree_to_json(tt)
     stream.close()
-    print("end programm")
+    print("Programm finished!")
