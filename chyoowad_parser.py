@@ -60,13 +60,6 @@ def shift_elements(elements):
     return elements
 
 
-def parse_input(stream):
-    new_tree = origin_tree()
-    for line in stream.readlines():
-        new_tree.add_node_from_str(line.strip())
-    return new_tree
-
-
 def add_link_to_elements(elements, origin_node, origin_element, target_node, target_element):
     origin_element_id = str(origin_node.counter) + origin_element
     target_element_id = str(target_node.counter) + target_element
@@ -154,21 +147,17 @@ def tree_to_json(tree):
     output.close()
 
 
-def origin_tree():
-    origin = "👣"
-    state = "👋"
-    choice_up = "ℹ️"
-    choice_down = "🆗"
-    new_node = Node(origin, state, choice_up, choice_down)
-    new_tree = Tree()
-    new_tree._add_node(new_node)
-    return new_tree
-
-
 def string_to_node(string):
     node_parts = extract_node_parts(string)
     node = Node(*node_parts)
     return node
+
+
+def parse_input(stream):
+    new_tree = Tree()
+    for line in stream.readlines():
+        new_tree.add_node_from_str(line.strip())
+    return new_tree
 
 
 if __name__ == "__main__":
